@@ -1,3 +1,5 @@
+using E_Commerce.Data;
+using Scalar.AspNetCore;
 
 namespace E_Commerce
 {
@@ -10,6 +12,7 @@ namespace E_Commerce
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddDALServices(builder.Configuration);
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
@@ -19,6 +22,7 @@ namespace E_Commerce
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
+                app.MapScalarApiReference();
             }
 
             app.UseHttpsRedirection();
