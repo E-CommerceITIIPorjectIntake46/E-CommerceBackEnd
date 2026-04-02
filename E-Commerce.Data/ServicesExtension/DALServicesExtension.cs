@@ -13,6 +13,9 @@ namespace E_Commerce.Data
             {
                 options.UseSqlServer(connectionString);
             });
+
+            services.AddScoped<ISeeder, CategorySeeder>();
+            services.AddScoped<ISeeder, ProductSeeder>();
         }
     }
 }
