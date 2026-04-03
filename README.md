@@ -16,3 +16,5 @@ This is a E-Commerce Web Application Api built Using **.NET 10**.
       V
   Presentaion Layer (Api)
   ```
+- Repository Pattern
+- UnitOfWork
