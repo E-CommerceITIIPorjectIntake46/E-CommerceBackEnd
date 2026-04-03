@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace E_Commerce.Data
 {
-    public class ECommerceDbContext : DbContext
+    public class ECommerceDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public ECommerceDbContext():base()
         {

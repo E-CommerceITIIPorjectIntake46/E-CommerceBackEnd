@@ -1,5 +1,6 @@
 using E_Commerce.Data;
 using E_Commerce.Logic;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -16,6 +17,9 @@ namespace E_Commerce
             builder.Services.AddControllers();
             builder.Services.AddDALServices(builder.Configuration);
             builder.Services.AddBLLServices();
+            builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
+                            .AddEntityFrameworkStores<ECommerceDbContext>()
+                            .AddDefaultTokenProviders();
 
 
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -41,6 +45,7 @@ namespace E_Commerce
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
