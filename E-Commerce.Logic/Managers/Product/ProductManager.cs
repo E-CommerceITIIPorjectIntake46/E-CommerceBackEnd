@@ -5,7 +5,7 @@ namespace E_Commerce.Logic
     public class ProductManager : IProductManager
     {
         private readonly IUnitOfWork _unitOfWork;
-        ProductManager(IUnitOfWork unitOfWork)
+        public ProductManager(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

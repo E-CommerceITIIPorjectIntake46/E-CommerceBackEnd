@@ -7,6 +7,8 @@ namespace E_Commerce.Logic
         public static void AddBLLServices(this IServiceCollection services)
         {
             services.AddScoped<ApplicationSeeder>();
+            services.AddScoped<ICategoryManager, CategoryManager>();
+            services.AddScoped<IProductManager, ProductManager>();
         }
     }
 }
