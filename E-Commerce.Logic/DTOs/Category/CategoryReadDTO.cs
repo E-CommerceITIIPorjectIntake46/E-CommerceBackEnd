@@ -1,4 +1,4 @@
-﻿namespace E_Commerce.Logic.DTOs.Category
+﻿namespace E_Commerce.Logic
 {
     public class CategoryReadDTO
     {
