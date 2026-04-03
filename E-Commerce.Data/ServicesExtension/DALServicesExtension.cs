@@ -18,6 +18,7 @@ namespace E_Commerce.Data
             services.AddScoped<ISeeder, ProductSeeder>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }
 }
