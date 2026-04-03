@@ -22,7 +22,7 @@ namespace E_Commerce.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<CategoryReadDTO>> GetCategory(int id)
+        public async Task<ActionResult<CategoryReadDTO>> GetCategory([FromRoute] int id)
         {
             var category = await _categoryManager.GetCategoryByIdAsync(id);
             if(category == null)

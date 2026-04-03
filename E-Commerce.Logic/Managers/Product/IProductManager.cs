@@ -2,7 +2,7 @@
 
 namespace E_Commerce.Logic
 {
-    internal interface IProductManager
+    public interface IProductManager
     {
         Task<IEnumerable<ProductReadDTO>> GetAllProductsAsync();
         Task<ProductReadDTO> GetProductByIdAsync(int id);
