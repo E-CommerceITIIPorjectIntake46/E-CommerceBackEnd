@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="E-Commerce.Common/E-Commerce.Common.csproj" Id="619ecdae-b04e-4fd2-b8f6-9e178acbabe9" />
   <Project Path="E-Commerce.Data/E-Commerce.Data.csproj" />
   <Project Path="E-Commerce.Logic/E-Commerce.Logic.csproj" />
   <Project Path="E-Commerce/E-Commerce.csproj" />

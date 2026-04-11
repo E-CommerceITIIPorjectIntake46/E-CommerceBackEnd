@@ -1,4 +1,6 @@
-﻿using E_Commerce.Logic;
+﻿using E_Commerce.Common;
+using E_Commerce.Data;
+using E_Commerce.Logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,100 +17,59 @@ namespace E_Commerce.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ProductReadDTO>>> GetAllProducts()
+        public async Task<ActionResult<GenericGeneralResult<IEnumerable<ProductReadDTO>>>> GetAllProducts()
         {
             var products = await _productManager.GetAllProductsAsync();
             return Ok(products);
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<ProductReadDTO>> GetProduct([FromRoute] int id)
+        public async Task<ActionResult<GenericGeneralResult<ProductReadDTO>>> GetProduct([FromRoute] int id)
         {
             var product = await _productManager.GetProductByIdAsync(id);
             if (product == null)
             {
-                var errorResponse = new
-                {
-                    ErrorCode = 404,
-                    Message = $"Product with ID {id} not found."
-                };
-                return NotFound(errorResponse);
+                return NotFound(product);
             }
             return Ok(product);
         }
 
         [HttpPost]
         [Route("Create")]
-        public async Task<ActionResult<ProductReadDTO>> CreateProduct([FromBody] ProductCreateDTO product)
+        public async Task<ActionResult<GenericGeneralResult<ProductReadDTO>>> CreateProduct([FromBody] ProductCreateDTO product)
         {
-            if(!ModelState.IsValid)
+            var result = await _productManager.AddProductAsync(product);
+            if (!result.Success)
             {
-                var errorResponse = new
-                {
-                    ErrorCode = 400,
-                    Message = "Invalid product data. Please check the input and try again."
-                };
-                return BadRequest(errorResponse);
+                return BadRequest(result);
             }
-            var createdProduct = await _productManager.AddProductAsync(product);
-            return Ok(createdProduct);
+            return Ok(result);
         }
 
         [HttpPut]
         [Route("Update/{id:int}")]
         public async Task<ActionResult> UpdateProduct([FromRoute] int id, [FromBody] ProductEditDTO updatedProduct)
         {
-            if(id != updatedProduct.Id)
+            if (id != updatedProduct.Id)
             {
-                var errorResponse = new
-                {
-                    ErrorCode = 400,
-                    Message = "Product ID in the URL does not match the ID in the request body."
-                };
-                return BadRequest(errorResponse);
+                return BadRequest("id and product.id you inserted doesnt match");
             }
 
-            if(updatedProduct == null)
+            if (updatedProduct is null)
             {
-                var errorResponse = new
-                {
-                    ErrorCode = 400,
-                    Message = "Updated product data cannot be null."
-                };
-                return BadRequest(errorResponse);
+                return BadRequest("product cannot be null");
             }
 
-            if(!ModelState.IsValid)
-            {
-                var errorResponse = new
-                {
-                    ErrorCode = 400,
-                    Message = "Invalid product data. Please check the input and try again."
-                };
-                return BadRequest(errorResponse);
-            }
-
-            await _productManager.UpdateProductAsync(updatedProduct);
-            return Ok("Product Updated Successfully");
+            var result = await _productManager.UpdateProductAsync(updatedProduct);
+            return Ok(result);
         }
 
         [HttpDelete]
         [Route("Delete/{id:int}")]
         public async Task<ActionResult> DeleteProduct([FromRoute] int id)
         {
-            var product = await _productManager.GetProductByIdAsync(id);
-            if (product == null)
-            {
-                var errorResponse = new
-                {
-                    ErrorCode = 404,
-                    Message = $"Product with ID {id} not found."
-                };
-                return NotFound(errorResponse);
-            }
-
-            await _productManager.DeleteProductAsync(id);
-            return Ok("Product Deleted Successfully");
+            var result = await _productManager.DeleteProductAsync(id);
+            return Ok(result);
         }
     }
 }

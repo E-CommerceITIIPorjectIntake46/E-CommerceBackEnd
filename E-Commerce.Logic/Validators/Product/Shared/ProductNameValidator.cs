@@ -3,10 +3,10 @@ using FluentValidation;
 
 namespace E_Commerce.Logic
 {
-    public class ProductNameVlidator : AbstractValidator<string>
+    public class ProductNameValidator : AbstractValidator<string>
     {
         private readonly IUnitOfWork _unitOfWork;
-        public ProductNameVlidator(IUnitOfWork unitOfWork)
+        public ProductNameValidator(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
 
@@ -33,7 +33,7 @@ namespace E_Commerce.Logic
         {
             var products = await _unitOfWork._ProductRepository.GetAllAsync();
 
-            var isUnique = products.Any(p => p.Name == name);
+            var isUnique = !products.Any(p => p.Name == name);
             return isUnique;
         }
     }
