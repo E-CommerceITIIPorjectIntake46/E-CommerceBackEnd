@@ -10,6 +10,7 @@ namespace E_Commerce.Logic
             services.AddScoped<ApplicationSeeder>();
             services.AddScoped<ICategoryManager, CategoryManager>();
             services.AddScoped<IProductManager, ProductManager>();
+            services.AddScoped<IImageManager, ImageManager>();
             services.AddValidatorsFromAssembly(typeof(BLLServicesExtension).Assembly);
             services.AddScoped<IErrorMapper, ErrorMapper>();
         }
