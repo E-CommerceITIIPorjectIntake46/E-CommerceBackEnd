@@ -1,4 +1,5 @@
-﻿using E_Commerce.Logic;
+﻿using E_Commerce.Common;
+using E_Commerce.Logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,100 +16,65 @@ namespace E_Commerce.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<CategoryReadDTO>>> GetAllCategories()
+        public async Task<ActionResult<GenericGeneralResult<IEnumerable<CategoryReadDTO>>>> GetAllCategories()
         {
-            var categories = await _categoryManager.GetAllCategoriesAsync();
-            return Ok(categories);
+            var result = await _categoryManager.GetAllCategoriesAsync();
+            return Ok(result);
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<CategoryReadDTO>> GetCategory([FromRoute] int id)
+        public async Task<ActionResult<GenericGeneralResult<CategoryReadDTO>>> GetCategory([FromRoute] int id)
         {
-            var category = await _categoryManager.GetCategoryByIdAsync(id);
-            if(category == null)
+            var result = await _categoryManager.GetCategoryByIdAsync(id);
+            if(result == null)
             {
-                var errorResponse = new
-                {
-                    ErrorCode = 404,
-                    Message = $"Category with ID {id} not found."
-                };
-                return NotFound(errorResponse);
+                
+                return NotFound(result);
             }
-            return Ok(category);
+            return Ok(result);
         }
 
         [HttpPost]
         [Route("Create")]
-        public async Task<ActionResult<CategoryReadDTO>> CreateCategory([FromBody] CategoryCreateDTO category)
+        public async Task<ActionResult<GenericGeneralResult<CategoryReadDTO>>> CreateCategory([FromBody] CategoryCreateDTO category)
         {
-            if (!ModelState.IsValid) 
+            var result = await _categoryManager.AddCategoryAsync(category);
+            if (!result.Success) 
             {
-                var errorResponse = new
-                {
-                    ErrorCode = 400,
-                    Message = "Invalid category data. Please check the input and try again."
-                };
-                return BadRequest(errorResponse);
+                return BadRequest(result);
             }
-            var createdCategory = await _categoryManager.CreateCategoryAsync(category);
-            return Ok(createdCategory);
+            return Ok(result);
         }
 
         [HttpPut]
         [Route("Update/{id:int}")]
-        public async Task<ActionResult> UpdateCategory([FromRoute] int id, [FromBody] CategoryEditDTO updatedCategory)
+        public async Task<ActionResult<GeneralResult>> UpdateCategory([FromRoute] int id, [FromBody] CategoryEditDTO updatedCategory)
         {
             if(id != updatedCategory.Id)
             {
-                var errorResponse = new
-                {
-                    ErrorCode = 400,
-                    Message = "ID in the URL does not match ID in the request body."
-                };
-                return BadRequest(errorResponse);
+                return BadRequest("ID in the URL does not match ID in the request body.");
             }
 
-            if(updatedCategory == null)
+            var result = await _categoryManager.UpdateCategoryAsync(updatedCategory);
+
+            if(!result.Success)
             {
-                var errorResponse = new
-                {
-                    ErrorCode = 400,
-                    Message = "Updated category data cannot be null."
-                };
-                return BadRequest(errorResponse);
+                return BadRequest(result);
             }
-
-            if (!ModelState.IsValid)
-            {
-                var errorResponse = new
-                {
-                    ErrorCode = 400,
-                    Message = "Invalid category data. Please check the input and try again."
-                };
-                return BadRequest(errorResponse);
-            }
-
-            await _categoryManager.UpdateCategoryAsync(updatedCategory);
-            return Ok("Category Updated Sucessfully");
+            return Ok(result);
         }
 
         [HttpDelete]
         [Route("Delete/{id:int}")]
         public async Task<ActionResult> DeleteCategory([FromRoute] int id)
         {
-            var category = await _categoryManager.GetCategoryByIdAsync(id);
-            if(category == null)
-            {
-                var errorResponse = new
-                {
-                    ErrorCode = 404,
-                    Message = $"Category with ID {id} not found."
-                };
-                return NotFound(errorResponse);
-            }
 
-            await _categoryManager.DeleteCategoryAsync(id);
-            return Ok("Category Deleted Sucessfully");
+            var result = await _categoryManager.DeleteCategoryAsync(id);
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
     }
 }

@@ -1,11 +1,13 @@
-﻿namespace E_Commerce.Logic
+﻿using E_Commerce.Common;
+
+namespace E_Commerce.Logic
 {
     public interface ICategoryManager
     {
-            Task<IEnumerable<CategoryReadDTO>> GetAllCategoriesAsync();
-            Task<CategoryReadDTO>? GetCategoryByIdAsync(int id);
-            Task<CategoryReadDTO> CreateCategoryAsync(CategoryCreateDTO createCategoryDto);
-            Task UpdateCategoryAsync(CategoryEditDTO updateCategoryDto);
-            Task DeleteCategoryAsync(int id);
+            Task<GenericGeneralResult<IEnumerable<CategoryReadDTO>>> GetAllCategoriesAsync();
+            Task<GenericGeneralResult<CategoryReadDTO>>? GetCategoryByIdAsync(int id);
+            Task<GenericGeneralResult<CategoryReadDTO>> AddCategoryAsync(CategoryCreateDTO createCategoryDto);
+            Task<GeneralResult> UpdateCategoryAsync(CategoryEditDTO updateCategoryDto);
+            Task<GeneralResult> DeleteCategoryAsync(int id);
     }
 }
