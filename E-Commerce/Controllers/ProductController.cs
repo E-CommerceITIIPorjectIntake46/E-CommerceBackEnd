@@ -22,6 +22,13 @@ namespace E_Commerce.Controllers
             var products = await _productManager.GetAllProductsAsync();
             return Ok(products);
         }
+        [HttpGet]
+        [Route("Pagination")]
+        public async Task<ActionResult<GenericGeneralResult<IEnumerable<ProductReadDTO>>>> GetAllProductPagination([FromQuery] PaginationParameters paginationParameters, [FromQuery] ProductFilterParameters filterParameters)
+        {
+            var products = await _productManager.GetProductsPaginationAsync(paginationParameters, filterParameters);
+            return Ok(products);
+        }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<GenericGeneralResult<ProductReadDTO>>> GetProduct([FromRoute] int id)

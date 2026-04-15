@@ -147,5 +147,11 @@ namespace E_Commerce.Logic
             await _unitOfWork.SaveAsync();
             return GeneralResult.SuccessResult("Product deleted successfully");
         }
+        public async Task<GenericGeneralResult<PagedResult<Product>>> GetProductsPaginationAsync(PaginationParameters paginationParameters, ProductFilterParameters productFilterParameters)
+        {
+            var pagedProducts = await _unitOfWork._ProductRepository.GetProductsPaginationAsync(paginationParameters, productFilterParameters);
+
+            return GenericGeneralResult<PagedResult<Product>>.SuccessResult(pagedProducts, "Products retrieved successfully");
+        }
     }
 }

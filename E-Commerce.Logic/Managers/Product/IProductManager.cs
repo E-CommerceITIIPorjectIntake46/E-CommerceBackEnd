@@ -10,5 +10,6 @@ namespace E_Commerce.Logic
         Task<GenericGeneralResult<ProductReadDTO>> AddProductAsync(ProductCreateDTO product);      
         Task<GeneralResult> UpdateProductAsync(ProductEditDTO productToUpdate);
         Task<GeneralResult> DeleteProductAsync(int id);
+        Task<GenericGeneralResult<PagedResult<Product>>> GetProductsPaginationAsync(PaginationParameters paginationParameters, ProductFilterParameters productFilterParameters);
     }
 }
