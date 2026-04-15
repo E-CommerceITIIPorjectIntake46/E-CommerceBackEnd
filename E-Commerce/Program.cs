@@ -1,4 +1,5 @@
 using E_Commerce.Data;
+using E_Commerce.Helper;
 using E_Commerce.Logic;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +35,17 @@ namespace E_Commerce
 
                 var seeder = scope.ServiceProvider.GetRequiredService<ApplicationSeeder>();
                 await seeder.SeedAllAsync(db, scope.ServiceProvider);
+            }
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+                var roleManager = services.GetRequiredService<RoleManager<ApplicationRole>>();
+
+                await AspUsersDataSeeder.SeedAdminAsync(roleManager, userManager);
+                await AspUsersDataSeeder.SeedCustomerRoleAsync(roleManager);
             }
 
             // Configure the HTTP request pipeline.
