@@ -67,6 +67,7 @@ namespace E_Commerce
             builder.Services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdminsOnly", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("CustomersOnly", policy => policy.RequireRole("Customer"));
             });
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
