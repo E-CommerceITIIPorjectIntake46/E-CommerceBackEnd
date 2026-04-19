@@ -27,7 +27,8 @@ namespace E_Commerce.Logic
             var categoryReadDTOs = categories.Select(c => new CategoryReadDTO
             {
                 Id = c.Id,
-                Name = c.Name
+                Name = c.Name,
+                ImageURL = c.ImageURL,
             });
             return GenericGeneralResult<IEnumerable<CategoryReadDTO>>.SuccessResult(categoryReadDTOs, "Categories retreived successfully");
         }
@@ -90,6 +91,7 @@ namespace E_Commerce.Logic
             }
 
             category.Name = updateCategoryDto.Name;
+            category.ImageURL = updateCategoryDto.ImageURL == null ? category.ImageURL : updateCategoryDto.ImageURL;
             await _unitOfWork.SaveAsync();
             return GeneralResult.SuccessResult("Category updated successfully");
         }

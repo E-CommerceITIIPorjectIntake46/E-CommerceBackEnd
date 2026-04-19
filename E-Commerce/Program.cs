@@ -80,7 +80,7 @@ namespace E_Commerce
             builder.Services.Configure<StaticFileOptions>(cfg =>
             {
                 cfg.FileProvider = new PhysicalFileProvider(staticFilesPath);
-                cfg.RequestPath = "Files";
+                cfg.RequestPath = "/Files";
             });
 
             var app = builder.Build();
@@ -111,6 +111,8 @@ namespace E_Commerce
                 app.MapOpenApi();
                 app.MapScalarApiReference();
             }
+
+            app.UseStaticFiles();
 
             app.UseHttpsRedirection();
 

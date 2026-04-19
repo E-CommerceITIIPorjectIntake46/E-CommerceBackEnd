@@ -7,8 +7,6 @@ namespace E_Commerce.Logic
     {
         public ProductEditDTOValidator(IUnitOfWork unitOfWork)
         {
-            RuleFor(product => product.Name)
-                .SetValidator(new ProductNameValidator(unitOfWork));
 
             RuleFor(product => product.Description)
                 .SetValidator(new ProductDescriptionValidator());

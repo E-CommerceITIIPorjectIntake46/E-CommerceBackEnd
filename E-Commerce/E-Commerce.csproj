@@ -21,4 +21,8 @@
     <ProjectReference Include="..\E-Commerce.Logic\E-Commerce.Logic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Files\" />
+  </ItemGroup>
+
 </Project>

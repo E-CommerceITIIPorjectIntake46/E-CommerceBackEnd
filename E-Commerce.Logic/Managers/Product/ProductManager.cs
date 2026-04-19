@@ -34,7 +34,8 @@ namespace E_Commerce.Logic
                 Price = p.Price,
                 Count = p.Count,
                 CategoryId = p.CategoryId,
-                Category = p.Category != null ? p.Category.Name : string.Empty
+                Category = p.Category != null ? p.Category.Name : string.Empty,
+                ImageURL = p.ImageURL,
             });
             return GenericGeneralResult<IEnumerable<ProductReadDTO>>.SuccessResult(productsReadDTO, "Products retrieved successfully");
         }
@@ -132,6 +133,7 @@ namespace E_Commerce.Logic
             product.Price = productToUpdate.Price;
             product.Count = productToUpdate.Count;
             product.CategoryId = productToUpdate.CategoryId;
+            product.ImageURL = productToUpdate.ImageURL == null ? product.ImageURL : productToUpdate.ImageURL ;
             await _unitOfWork.SaveAsync();
             return GeneralResult.SuccessResult("Product updated successfully");
         }

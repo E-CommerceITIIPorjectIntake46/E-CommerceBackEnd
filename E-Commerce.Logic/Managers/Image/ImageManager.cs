@@ -38,6 +38,13 @@ namespace E_Commerce.Logic
                 Directory.CreateDirectory(directoryPath);
             }
 
+            var fullFilePath = Path.Combine(directoryPath, uniqueName);
+
+            using (var stream = new FileStream(fullFilePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
             var url = $"{schema}://{host}/Files/{uniqueName}";
             var imageUploadResultDTO = new ImageUploadResultDTO(url);
             return GenericGeneralResult<ImageUploadResultDTO>.SuccessResult(imageUploadResultDTO);

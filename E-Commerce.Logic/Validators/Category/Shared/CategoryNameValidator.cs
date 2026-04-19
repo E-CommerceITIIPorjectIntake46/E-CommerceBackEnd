@@ -25,7 +25,7 @@ namespace E_Commerce.Logic
 
                 .MustAsync(CheckNameUnique)
                 .WithMessage("Category name must be unique.")
-                .WithMessage("ERR-C-004");
+                .WithErrorCode("ERR-C-004");
         }
 
         private async Task<bool> CheckNameUnique(string name, CancellationToken cancellationToken)

@@ -1,4 +1,5 @@
 ﻿using E_Commerce.Common;
+using E_Commerce.Data;
 using E_Commerce.Logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,9 +23,8 @@ namespace E_Commerce.Controllers
             _categoryManager = categoryManager;
         }
 
-        [HttpPost]
-        [Route("productImageUpload")]
-        public async Task<ActionResult<GenericGeneralResult<ImageUploadResultDTO>>> UploadProductImage([FromForm] ImageUploadDTO imageUploadDTO, int ProductId)
+        [HttpPost("product/{ProductId::int}")]
+        public async Task<ActionResult<GenericGeneralResult<ImageUploadResultDTO>>> UploadProductImage([FromForm] ImageUploadDTO imageUploadDTO,[FromRoute] int ProductId)
         {
             var product = await _productManager.GetProductByIdAsync(ProductId);
             if (product is null)
@@ -37,7 +37,7 @@ namespace E_Commerce.Controllers
             var host = Request.Host.Value;
             var basePath = _environment.ContentRootPath;
 
-            var result = await _imageManager.UploadImageAsync(imageUploadDTO, schema, host, basePath);
+            var result = await _imageManager.UploadImageAsync(imageUploadDTO, basePath, schema, host);
             if (!result.Success)
             {
                 return BadRequest(result);
@@ -69,9 +69,8 @@ namespace E_Commerce.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
-        [Route("categoryImageUpload")]
-        public async Task<ActionResult<GenericGeneralResult<ImageUploadResultDTO>>> UploadCategoryImage([FromForm] ImageUploadDTO imageUploadDTO, int CategoryId)
+        [HttpPost("category/{CategoryId::int}")]
+        public async Task<ActionResult<GenericGeneralResult<ImageUploadResultDTO>>> UploadCategoryImage([FromForm] ImageUploadDTO imageUploadDTO,[FromRoute] int CategoryId)
         {
             var category = await _categoryManager.GetCategoryByIdAsync(CategoryId);
             if (category is null)
@@ -84,7 +83,7 @@ namespace E_Commerce.Controllers
             var host = Request.Host.Value;
             var basePath = _environment.ContentRootPath;
 
-            var result = await _imageManager.UploadImageAsync(imageUploadDTO, schema, host, basePath);
+            var result = await _imageManager.UploadImageAsync(imageUploadDTO, basePath, schema, host);
             if (!result.Success)
             {
                 return BadRequest(result);

@@ -8,8 +8,6 @@ namespace E_Commerce.Logic
     {
         public CategoryEditDTOValidator(IUnitOfWork unitOfWork)
         {
-            RuleFor(x => x.Name)
-                .SetValidator(new CategoryNameValidator(unitOfWork));
 
         }
 
