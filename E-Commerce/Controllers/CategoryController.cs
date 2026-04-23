@@ -1,5 +1,6 @@
 ﻿using E_Commerce.Common;
 using E_Commerce.Logic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,6 +37,7 @@ namespace E_Commerce.Controllers
 
         [HttpPost]
         [Route("Create")]
+        [Authorize(Policy = "AdminsOnly")]
         public async Task<ActionResult<GenericGeneralResult<CategoryReadDTO>>> CreateCategory([FromBody] CategoryCreateDTO category)
         {
             var result = await _categoryManager.AddCategoryAsync(category);
@@ -48,6 +50,7 @@ namespace E_Commerce.Controllers
 
         [HttpPut]
         [Route("Update/{id:int}")]
+        [Authorize(Policy = "AdminsOnly")]
         public async Task<ActionResult<GeneralResult>> UpdateCategory([FromRoute] int id, [FromBody] CategoryEditDTO updatedCategory)
         {
             if(id != updatedCategory.Id)
@@ -66,6 +69,7 @@ namespace E_Commerce.Controllers
 
         [HttpDelete]
         [Route("Delete/{id:int}")]
+        [Authorize(Policy = "AdminsOnly")]
         public async Task<ActionResult> DeleteCategory([FromRoute] int id)
         {
 

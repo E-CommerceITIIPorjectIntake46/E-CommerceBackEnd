@@ -32,7 +32,7 @@ namespace E_Commerce.Logic
         {
             var category = await _unitOfWork._CategoryRepository.GetAllAsync();
 
-            var isUnique = category.Any(c => c.Name == name);
+            var isUnique = !category.Any(c => c.Name == name);
             return isUnique;
         }
     }

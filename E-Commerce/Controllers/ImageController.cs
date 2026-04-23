@@ -1,11 +1,13 @@
 ﻿using E_Commerce.Common;
 using E_Commerce.Data;
 using E_Commerce.Logic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_Commerce.Controllers
 {
+    [Authorize(Policy = "AdminsOnly")]
     [Route("api/[controller]")]
     [ApiController]
     public class ImageController : ControllerBase

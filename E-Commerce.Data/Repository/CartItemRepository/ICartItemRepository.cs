@@ -2,5 +2,6 @@
 {
     public interface ICartItemRepository : IGenericRepository<CartItem>
     {
+        Task<List<CartItem>> GetCartItemsOfCartWithProductAsync(int cartId);
     }
 }

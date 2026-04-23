@@ -60,6 +60,12 @@ namespace E_Commerce.Data
                 }
             };
         }
+        public async Task<IEnumerable<Product>> GetProductsBasedOnListOfIds(List<int> productIds)
+        {
+            return await _dbContext.Products
+                                   .Where(p => productIds.Contains(p.Id))
+                                   .ToListAsync();
+        }
         private IQueryable<Product> ApplyFilters(IQueryable<Product> query,ProductFilterParameters? productFilterParameters)
         {
             if (productFilterParameters.MinCount > 0)

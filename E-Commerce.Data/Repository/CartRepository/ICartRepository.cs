@@ -2,6 +2,7 @@
 {
     public interface ICartRepository : IGenericRepository<Cart>
     {
-        Task<Cart> GetCartWithItemsByUserIdAsync(int userId);
+        Task<Cart> GetCartWithItemsByUserIdAsync(string userId);
+        Task<Cart> GetCartWithItemsAndProductsByUserIdAsync(string userId);
     }
 }

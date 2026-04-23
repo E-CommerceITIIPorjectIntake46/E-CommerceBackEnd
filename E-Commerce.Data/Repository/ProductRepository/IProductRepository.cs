@@ -7,5 +7,6 @@ namespace E_Commerce.Data
         Task<IEnumerable<Product>> GetProductsWithCategoryAsync();
         Task<Product>? GetProductWithCategoryAsync(int id);
         Task<PagedResult<Product>> GetProductsPaginationAsync(PaginationParameters? paginationParameters = null, ProductFilterParameters? filterParameters = null);
+        Task<IEnumerable<Product>> GetProductsBasedOnListOfIds(List<int> productIds);
     }
 }

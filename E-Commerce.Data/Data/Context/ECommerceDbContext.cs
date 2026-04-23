@@ -22,5 +22,7 @@ namespace E_Commerce.Data
         public virtual DbSet<Category> Categories => Set<Category>();
         public virtual DbSet<Cart> Carts => Set<Cart>();
         public virtual DbSet<CartItem> CartItems => Set<CartItem>();
+        public virtual DbSet<Order> Orders => Set<Order>();
+        public virtual DbSet<OrderItem> OrderItems => Set<OrderItem>();
     }
 }

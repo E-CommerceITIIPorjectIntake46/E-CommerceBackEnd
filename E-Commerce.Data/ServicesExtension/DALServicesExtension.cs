@@ -18,6 +18,10 @@ namespace E_Commerce.Data
             services.AddScoped<ISeeder, ProductSeeder>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICartRepository, CartRepository>();
+            services.AddScoped<ICartItemRepository, CartItemRepository>();
+            services.AddScoped<IOrderRepositoy, OrderRepository>();
+            services.AddScoped<IOrderItemRepository, OrderItemRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }
